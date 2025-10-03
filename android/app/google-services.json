@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "596344722417",
+    "project_id": "hbappsgrocery",
+    "storage_bucket": "hbappsgrocery.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596344722417:android:9ab1de9a78c9b7c1386a50",
+        "android_client_info": {
+          "package_name": "com.example.officialgrocery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAESWBDs-Mv776OEStlDf9UCvU577uPndo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
