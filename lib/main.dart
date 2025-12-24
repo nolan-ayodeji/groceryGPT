@@ -13,7 +13,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 String theRoom = '200';
 String globcat = "Other";
 bool notInRoom = true;
@@ -39,7 +38,6 @@ class Grocery {
   bool needed;
   int quantity;
   String type;
-
 
   Grocery({
     required this.name,
@@ -78,8 +76,6 @@ class GroceryProvider with ChangeNotifier {
   GroceryProvider({required this.roomId}) {
     fetchGroceries();
   }
-
-
 
   Future<void> fetchGroceries() async {
     print('GROCERIES ARE BEING FETCHED HERE ARE THE LISTS');
@@ -369,9 +365,7 @@ class _MyHomePageState extends State<MyHomePage> {
     true,
   ];
 
-  final List<bool> _catsbool2 = [
-    true
-  ];
+  final List<bool> _catsbool2 = [true];
 
   void _incrementCounter() {
     setState(() {
@@ -619,7 +613,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: Colors.black38,
                                             ),
                                           ],
-                                          fontSize: 19,
+                                          fontSize: 16,
                                           fontFamily: 'Schyler',
                                         ),
                                       );
@@ -948,308 +942,308 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: MediaQuery.of(context).size.height,
                   ),
                 ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 60,
-                    ),
-                    Center(
-                      //settings
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(43),
-                        child: BackdropFilter(
-                          filter: ui.ImageFilter.blur(
-                            sigmaX: 7.0,
-                            sigmaY: 732.0,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                //colors
-                                color: Colors.black12,
-                                borderRadius: BorderRadius.circular(43),
-                                border: Border.all(
-                                  color: Colors.white70,
-                                  width: 2,
-                                ),
+                Center(
+                  //settings
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(43),
+                    child: BackdropFilter(
+                      filter: ui.ImageFilter.blur(
+                        sigmaX: 7.0,
+                        sigmaY: 732.0,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            //colors
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(43),
+                            border: Border.all(
+                              color: Colors.white70,
+                              width: 2,
+                            ),
 
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    spreadRadius: 1,
-                                    blurRadius: 6,
-                                    offset: Offset(
-                                        0, 2), // changes position of shadow
-                                  ),
-                                ],
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black26,
+                                spreadRadius: 1,
+                                blurRadius: 6,
+                                offset: Offset(
+                                    0, 2), // changes position of shadow
                               ),
-                              height: MediaQuery.of(context).size.height / 1.1,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 50,
-                                  ),
-                                  StreamBuilder<DocumentSnapshot>(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('groceryRooms')
-                                        .doc(Provider.of<GroceryProvider>(
-                                                context)
-                                            .roomId)
-                                        .snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<DocumentSnapshot>
-                                            snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return Text('Loading password...');
-                                      } else if (snapshot.hasError) {
-                                        return Text('Error: ${snapshot.error}');
-                                      } else if (!snapshot.hasData ||
-                                          !snapshot.data!.exists) {
-                                        return Text('Document does not exist');
-                                      } else {
-                                        String password = snapshot.data!
-                                            .get('password')
-                                            .toString();
-                                        String roomCode = snapshot.data!.id;
-                                        return Text(
-                                          'Room Code: $roomCode ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            color: Colors.white,
-                                            shadows: <Shadow>[
-                                              Shadow(
-                                                offset: Offset(0.0, 1.5),
-                                                blurRadius: 8.0,
-                                                color: Colors.black38,
-                                              ),
-                                            ],
-                                            fontSize: 33,
-                                            fontFamily: 'Schyler',
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                  StreamBuilder<DocumentSnapshot>(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('groceryRooms')
-                                        .doc(Provider.of<GroceryProvider>(
-                                                context)
-                                            .roomId)
-                                        .snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<DocumentSnapshot>
-                                            snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return Text('Loading password...');
-                                      } else if (snapshot.hasError) {
-                                        return Text('Error: ${snapshot.error}');
-                                      } else if (!snapshot.hasData ||
-                                          !snapshot.data!.exists) {
-                                        return Text('Document does not exist');
-                                      } else {
-                                        String password = snapshot.data!
-                                            .get('password')
-                                            .toString();
-                                        String roomCode = snapshot.data!.id;
-                                        return Text(
-                                          'Room Password: $password ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            color: Colors.white70,
-                                            shadows: <Shadow>[
-                                              Shadow(
-                                                offset: Offset(0.0, 1.5),
-                                                blurRadius: 8.0,
-                                                color: Colors.black38,
-                                              ),
-                                            ],
-                                            fontSize: 18,
-                                            fontFamily: 'Schyler',
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-
-                                          Center(
-                                            child: InkWell(
-                                              onTap: setvis,
-                                              child: AnimatedContainer(
-                                                duration:
-                                                    Duration(milliseconds: 40),
-                                                width: 330,
-                                                height: 70,
-                                                decoration: BoxDecoration(
-                                                  //colors
-                                                  color: Colors.white60,
-                                                  borderRadius:
-                                                      BorderRadius.circular(45),
-                                                  border: Border.all(
-                                                    color: Colors.white,
-                                                    width: 2,
-                                                  ),
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      color: Color(0x2C000000),
-                                                      spreadRadius: 1,
-                                                      blurRadius: 6,
-                                                      offset: Offset(0,
-                                                          2), // changes position of shadow
-                                                    ),
-                                                  ],
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                    colors: <Color>[
-                                                      Color(0xBE626162),
-                                                      Color(0xda191919),
-                                                    ],
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                    child: Text(
-                                                  """
-Return To Grocery Page""",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontFamily: 'Schyler',
-                                                      fontSize: 25),
-                                                )),
-                                              ),
-                                            ),
-                                          ),
-                                          Center(
-                                            child: InkWell(
-                                              onTap: exitRoom,
-                                              child: AnimatedContainer(
-                                                duration:
-                                                Duration(milliseconds: 40),
-                                                width: 200,
-                                                height: 70,
-                                                decoration: BoxDecoration(
-                                                  //colors
-                                                  color: Colors.white60,
-                                                  borderRadius:
-                                                  BorderRadius.circular(45),
-                                                  border: Border.all(
-                                                    color: Colors.red,
-                                                    width: 2,
-                                                  ),
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      color: Color(0x2C000000),
-                                                      spreadRadius: 1,
-                                                      blurRadius: 6,
-                                                      offset: Offset(0,
-                                                          2), // changes position of shadow
-                                                    ),
-                                                  ],
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                    colors: <Color>[
-                                                      Color(0xBE626162),
-                                                      Color(0xda191919),
-                                                    ],
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                    child: Text(
-                                                      "Exit Room",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontFamily: 'Schyler',
-                                                          fontSize: 25),
-                                                    )),
-                                              ),
-                                            ),
-                                          ),
-                                          Center(
-                                            child: InkWell(
-                                              onTap: setvis,
-                                              child: AnimatedContainer(
-                                                duration:
-                                                    Duration(milliseconds: 40),
-                                                width: 390,
-                                                height: 280,
-                                                decoration: BoxDecoration(
-                                                  //colors
-                                                  color: Colors.white60,
-                                                  borderRadius:
-                                                      BorderRadius.circular(35),
-                                                  border: Border.all(
-                                                    color: Colors.white,
-                                                    width: 2,
-                                                  ),
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      color: Color(0x2C000000),
-                                                      spreadRadius: 1,
-                                                      blurRadius: 6,
-                                                      offset: Offset(0,
-                                                          2), // changes position of shadow
-                                                    ),
-                                                  ],
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                    colors: <Color>[
-                                                      Color(0xBE626162),
-                                                      Color(0xda191919),
-                                                    ],
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                    child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Text(
-                                                      """
-Sort Groceries""",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontFamily: 'Schyler',
-                                                          fontSize: 25),
-                                                    ),
-
-                                                    sortButton(txt: "Alphabetically",),
-                                                    sortButton(txt: "By Category",),
-                                                    sortButton(txt: "Time Added",)
-                                                  ],
-                                                )),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20,
+                            ],
+                          ),
+                          height: MediaQuery.of(context).size.height / 1.1,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 50,
+                              ),
+                              StreamBuilder<DocumentSnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('groceryRooms')
+                                    .doc(Provider.of<GroceryProvider>(
+                                            context)
+                                        .roomId)
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot>
+                                        snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text('Loading password...');
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (!snapshot.hasData ||
+                                      !snapshot.data!.exists) {
+                                    return Text('Document does not exist');
+                                  } else {
+                                    String password = snapshot.data!
+                                        .get('password')
+                                        .toString();
+                                    String roomCode = snapshot.data!.id;
+                                    return Text(
+                                      'Room Code: $roomCode ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        color: Colors.white,
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                            offset: Offset(0.0, 1.5),
+                                            blurRadius: 8.0,
+                                            color: Colors.black38,
                                           ),
                                         ],
+                                        fontSize: 33,
+                                        fontFamily: 'Schyler',
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    );
+                                  }
+                                },
                               ),
-                            ),
+                              StreamBuilder<DocumentSnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('groceryRooms')
+                                    .doc(Provider.of<GroceryProvider>(
+                                            context)
+                                        .roomId)
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot>
+                                        snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text('Loading password...');
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (!snapshot.hasData ||
+                                      !snapshot.data!.exists) {
+                                    return Text('Document does not exist');
+                                  } else {
+                                    String password = snapshot.data!
+                                        .get('password')
+                                        .toString();
+                                    String roomCode = snapshot.data!.id;
+                                    return Text(
+                                      'Room Password: $password ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        color: Colors.white70,
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                            offset: Offset(0.0, 1.5),
+                                            blurRadius: 8.0,
+                                            color: Colors.black38,
+                                          ),
+                                        ],
+                                        fontSize: 18,
+                                        fontFamily: 'Schyler',
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                              Expanded(
+                                child: Container(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Center(
+                                        child: InkWell(
+                                          onTap: setvis,
+                                          child: AnimatedContainer(
+                                            duration:
+                                                Duration(milliseconds: 40),
+                                            width: 330,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              //colors
+                                              color: Colors.white60,
+                                              borderRadius:
+                                                  BorderRadius.circular(45),
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 2,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color(0x2C000000),
+                                                  spreadRadius: 1,
+                                                  blurRadius: 6,
+                                                  offset: Offset(0,
+                                                      2), // changes position of shadow
+                                                ),
+                                              ],
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: <Color>[
+                                                  Color(0xBE626162),
+                                                  Color(0xda191919),
+                                                ],
+                                              ),
+                                            ),
+                                            child: Center(
+                                                child: Text(
+                                              """
+Return To Grocery Page""",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: 'Schyler',
+                                                  fontSize: 25),
+                                            )),
+                                          ),
+                                        ),
+                                      ),
+                                      Center(
+                                        child: InkWell(
+                                          onTap: exitRoom,
+                                          child: AnimatedContainer(
+                                            duration:
+                                                Duration(milliseconds: 40),
+                                            width: 200,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              //colors
+                                              color: Colors.white60,
+                                              borderRadius:
+                                                  BorderRadius.circular(45),
+                                              border: Border.all(
+                                                color: Colors.red,
+                                                width: 2,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color(0x2C000000),
+                                                  spreadRadius: 1,
+                                                  blurRadius: 6,
+                                                  offset: Offset(0,
+                                                      2), // changes position of shadow
+                                                ),
+                                              ],
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: <Color>[
+                                                  Color(0xBE626162),
+                                                  Color(0xda191919),
+                                                ],
+                                              ),
+                                            ),
+                                            child: Center(
+                                                child: Text(
+                                              "Exit Room",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: 'Schyler',
+                                                  fontSize: 25),
+                                            )),
+                                          ),
+                                        ),
+                                      ),
+                                      Center(
+                                        child: InkWell(
+                                          onTap: setvis,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: AnimatedContainer(
+                                              duration:
+                                                  Duration(milliseconds: 40),
+
+                                              height: 280,
+                                              decoration: BoxDecoration(
+                                                //colors
+                                                color: Colors.white60,
+                                                borderRadius:
+                                                    BorderRadius.circular(35),
+                                                border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 2,
+                                                ),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    color: Color(0x2C000000),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 6,
+                                                    offset: Offset(0,
+                                                        2), // changes position of shadow
+                                                  ),
+                                                ],
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: <Color>[
+                                                    Color(0xBE626162),
+                                                    Color(0xda191919),
+                                                  ],
+                                                ),
+                                              ),
+                                              child: Center(
+                                                  child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  Text(
+                                                    """
+Sort Groceries""",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily: 'Schyler',
+                                                        fontSize: 25),
+                                                  ),
+                                                  sortButton(
+                                                    txt: "Alphabetically",
+                                                  ),
+                                                  sortButton(
+                                                    txt: "By Category",
+                                                  ),
+                                                  sortButton(
+                                                    txt: "By Time Added",
+                                                  )
+                                                ],
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 )
               ],
             ),
@@ -1882,7 +1876,6 @@ class _catItemState extends State<catItem> {
     );
   }
 }
-
 
 class sortButton extends StatefulWidget {
   final txt;

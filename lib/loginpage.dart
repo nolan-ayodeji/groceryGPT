@@ -105,11 +105,19 @@ class _loginPageState extends State<loginPage> {
 
       Navigator.pushReplacement(
         context,
-         MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider(
-            create: (context) => GroceryProvider(roomId: roomCode.toString()), // Pass the roomCode to the provider
-            child: MyHomePage(title: 'Flutter Demo Home Page', roomId: roomCode.toString()),
-          ),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ChangeNotifierProvider(
+                create: (context) => GroceryProvider(roomId: roomCode.toString()),
+                child: MyHomePage(title: 'Flutter Demo Home Page', roomId: roomCode.toString()),
+              ),
+          transitionDuration: const Duration(milliseconds: 250),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
         ),
       );
 
@@ -139,11 +147,24 @@ class _loginPageState extends State<loginPage> {
           print('Password for room $roomCode matches: $password');
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider(
-                create: (context) => GroceryProvider(roomId: roomCode), // Create a new instance with the new roomId
-                child: MyHomePage(title: 'Flutter Demo Home Page', roomId: roomCode),
-              ),
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  ChangeNotifierProvider(
+                    create: (context) => GroceryProvider(roomId: roomCode),
+                    child: MyHomePage(title: 'Flutter Demo Home Page', roomId: roomCode),
+                  ),
+
+              // Define the transition duration
+              transitionDuration: const Duration(milliseconds: 250), // Adjust for speed
+
+              // The transition effect function
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                // Use a FadeTransition for a smooth dissolve effect
+                return FadeTransition(
+                  opacity: animation, // Use the primary animation controller
+                  child: child,
+                );
+              },
             ),
           );
 
@@ -174,15 +195,33 @@ class _loginPageState extends State<loginPage> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: Colors.black26,  // This darkens the background
+            color: Colors.black12,  // This darkens the background
           ),
           Column(
 
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height /4.5,
 
+              SizedBox(
+                height: 30,
               ),
+
+              Container(
+                width: MediaQuery.of(context).size.width /1.04,
+                height: 100,
+                // Define the max height
+
+                child: Image.asset(
+                  'assets/gpt_wide.png', // Replace with your actual path
+                  fit: BoxFit.fitWidth, // <--- Key Property
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+
+
+
 
               InkWell(
                 onTapDown: (details){
@@ -198,7 +237,7 @@ class _loginPageState extends State<loginPage> {
                 child: Center(
                   child: Container(
 
-                    height: 290,
+
                     width: MediaQuery.of(context).size.width /1.04,
                     decoration: BoxDecoration(
                       //colors
@@ -233,7 +272,7 @@ class _loginPageState extends State<loginPage> {
                       children: [
 
                         const Center(child:  Text(
-                          'Enter Existing sRoom',
+                          'Join Room',
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 30,
@@ -243,7 +282,7 @@ class _loginPageState extends State<loginPage> {
                               Shadow(
                                 offset: Offset(0.0, 3.0),
                                 blurRadius: 5.0,
-                                color: Colors.black38,
+                                color: Colors.black12,
                               ),
                             ],
                           ),
@@ -254,69 +293,72 @@ class _loginPageState extends State<loginPage> {
 
 
                         Center(
-                          child: Container(
-                            width: 330,
-                            height: 90,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 70,
 
 
-                            decoration: BoxDecoration(
-                              //colors
-                              color: Color(0xda191919),
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0x2C000000),
-                                  spreadRadius: 2,
-                                  blurRadius: 3,
-                                  offset: Offset(0, 2), // changes position of shadow
+                              decoration: BoxDecoration(
+                                //colors
+                                color: Color(0xda191919),
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
                                 ),
-                              ],
-                              gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: <Color>[
-                                  Color(0x88A9A9A9),
-                                  Color(0xBE626162),
-
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x2C000000),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 2), // changes position of shadow
+                                  ),
                                 ],
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: <Color>[
+                                    Color(0x88A9A9A9),
+                                    Color(0xBE626162),
+
+                                  ],
+                                ),
                               ),
-                            ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Container(
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Container(
 
-                                  child: TextFormField(
-                                    controller: _controller,
-                                    onChanged: (value) {
-                                      findRoomAndPrintPassword();
-
-                                    },
-                                    maxLength: 5,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 20,
-                                      fontFamily: 'Schyler',
-                                    ),
-                                    cursorColor: Colors.black,
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      counterText: '',
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      hintText: 'Type Room Code Here',
-                                      hintStyle: TextStyle(
+                                    child: TextFormField(
+                                      controller: _controller,
+                                      keyboardType: TextInputType.number,
+                                      // onChanged: (value) {
+                                      //   findRoomAndPrintPassword();
+                                      //
+                                      // },
+                                      maxLength: 5,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 20,
                                         fontFamily: 'Schyler',
-                                        color: Colors.white38,
                                       ),
+                                      cursorColor: Colors.black,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        counterText: '',
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        hintText: 'Type Room Code Here',
+                                        hintStyle: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 20,
+                                          fontFamily: 'Schyler',
+                                          color: Colors.white38,
+                                        ),
 
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -325,17 +367,93 @@ class _loginPageState extends State<loginPage> {
                           ),
                         ),
                         const SizedBox(
-                          height: 19,
+                          height: 5,
                         ),
                         Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 70,
+
+
+                              decoration: BoxDecoration(
+                                //colors
+                                color: Color(0xda191919),
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x2C000000),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 2), // changes position of shadow
+                                  ),
+                                ],
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: <Color>[
+                                    Color(0x88A9A9A9),
+                                    Color(0xBE626162),
+
+                                  ],
+                                ),
+                              ),
+                              child: Center(
+                                child: TextFormField(
+                                  controller: _controller2,
+                                  keyboardType: TextInputType.number,
+                                  // onChanged: (value) {
+                                  //   findRoomAndPrintPassword();
+                                  // },
+
+                                  maxLength: 5,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 20,
+                                    fontFamily: 'Schyler',
+                                  ),
+                                  cursorColor: Colors.black,
+
+                                  decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      counterText: '',
+
+
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+
+                                      hintText: 'Type Room Password Here',
+                                      hintStyle: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 20,
+                                        fontFamily: 'Schyler',
+                                        color: Colors.white38,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        InkWell(
+                          onTap: (){
+              findRoomAndPrintPassword();
+              },
                           child: Container(
-                            width: 390,
-                            height: 70,
+                            width: 180,
+                            height: 40,
 
 
                             decoration: BoxDecoration(
                               //colors
-                              color: Color(0xda191919),
+                              color: Color(0xda6d8169),
                               borderRadius: BorderRadius.circular(50),
                               border: Border.all(
                                 color: Colors.white,
@@ -359,43 +477,23 @@ class _loginPageState extends State<loginPage> {
                                 ],
                               ),
                             ),
-                            child: Center(
-                              child: TextFormField(
-                                controller: _controller2,
-                                onChanged: (value) {
-                                  findRoomAndPrintPassword();
-                                },
-
-                                maxLength: 5,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 20,
-                                  fontFamily: 'Schyler',
+                            child: Center(child: Text('Join', style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontFamily: 'Schyler',
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(0.0, 3.0),
+                                  blurRadius: 5.0,
+                                  color: Colors.black12,
                                 ),
-                                cursorColor: Colors.black,
-
-                                decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    counterText: '',
-
-
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-
-                                    hintText: 'Enter Room Password Here',
-                                    hintStyle: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 20,
-                                      fontFamily: 'Schyler',
-                                      color: Colors.white38,
-                                    )),
-                              ),
-                            ),
+                              ],
+                            ),)),
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 12,
                         ),
 
                       ],
@@ -404,104 +502,134 @@ class _loginPageState extends State<loginPage> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 15,
               ),
-              Center(
-                child: Container(
-
-                  height: 180,
-                  width: MediaQuery.of(context).size.width /1.09,
-                  decoration: BoxDecoration(
-                    //colors
-
-                    borderRadius: BorderRadius.circular(70),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2,
-                    ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x2C000000),
-                        spreadRadius: 2,
-                        blurRadius: 3,
-                        offset: Offset(0, 2), // changes position of shadow
+              Visibility(
+                visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+                child: Text(
+                  'Or',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontFamily: 'Schyler',
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(0.0, 3.0),
+                        blurRadius: 5.0,
+                        color: Colors.black12,
                       ),
                     ],
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: <Color>[
-
-                        Color(0x864D4D4D),
-                        Color(0x867E7E7E),
-                      ],
-                    ),
                   ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Visibility(
+                visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+                child: Center(
+                  child: Container(
 
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    height: 180,
+                    width: MediaQuery.of(context).size.width /1.09,
+                    decoration: BoxDecoration(
+                      //colors
+
+                      borderRadius: BorderRadius.circular(70),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x2C000000),
+                          spreadRadius: 2,
+                          blurRadius: 3,
+                          offset: Offset(0, 2), // changes position of shadow
+                        ),
+                      ],
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: <Color>[
+
+                          Color(0x864D4D4D),
+                          Color(0x867E7E7E),
+                        ],
+                      ),
+                    ),
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
 
 
-                    children: [
+                      children: [
 
 
 
 
-                      Center(
-                        child: InkWell(
+                        Center(
+                          child: InkWell(
 
 
-                          child: Container(
-                            width: 330,
-                            height: 90,
+                            onTap: createNewRoom,
 
 
-                            decoration: BoxDecoration(
-                              //colors
-                              color: Color(0xda191919),
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0x2C000000),
-                                  spreadRadius: 2,
-                                  blurRadius: 3,
-                                  offset: Offset(0, 2), // changes position of shadow
+                            child: Container(
+                              width: 330,
+                              height: 90,
+
+
+                              decoration: BoxDecoration(
+                                //colors
+                                color: Color(0xda191919),
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
                                 ),
-                              ],
-                              gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: <Color>[
-                                  Color(0x88A9A9A9),
-                                  Color(0xBE626162),
-
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x2C000000),
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 2), // changes position of shadow
+                                  ),
                                 ],
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: <Color>[
+                                    Color(0x88A9A9A9),
+                                    Color(0xBE626162),
+
+                                  ],
+                                ),
+                              ),
+                              child: Visibility(
+                                visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+                                child: Center(child: Text('Generate Room', style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 30,
+                                  color: Colors.white,
+                                  fontFamily: 'Schyler',
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(0.0, 3.0),
+                                      blurRadius: 5.0,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),)),
                               ),
                             ),
-                            child: Center(child: Text('Create New Room', style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontFamily: 'Schyler',
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(0.0, 3.0),
-                                  blurRadius: 5.0,
-                                  color: Colors.black38,
-                                ),
-                              ],
-                            ),)),
                           ),
-                          onTap: createNewRoom,
                         ),
-                      ),
 
-                      
-                    ],
+
+                      ],
+                    ),
                   ),
                 ),
               ),
